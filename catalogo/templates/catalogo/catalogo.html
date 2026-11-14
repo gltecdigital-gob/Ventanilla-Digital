@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block titulo %}Trámites y servicios · {{ municipio.nombre }}{% endblock %}
+{% block contenido %}
+<h1>Trámites y servicios de {{ municipio.nombre }}</h1>
+
+<form class="buscador" method="get" role="search">
+  <div class="campo campo--ancho">
+    <label for="q">¿Qué necesitas hacer?</label>
+    <input id="q" name="q" type="search" value="{{ busqueda }}" placeholder="Por ejemplo: constancia, predial, licencia" autocomplete="off">
+  </div>
+  <div class="campo">
+    <label for="dependencia">Dependencia</label>
+    <select id="dependencia" name="dependencia">
+      <option value="">Todas</option>
+      {% for d in dependencias %}
+      <option value="{{ d.id }}"{% if dependencia_id == d.id|stringformat:"s" %} selected{% endif %}>{{ d.nombre }} ({{ d.total }})</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="campo">
+    <label for="canal">Cómo se hace</label>
+    <select id="canal" name="canal">
+      <option value="">Cualquiera</option>
+      {% for valor, etiqueta in canales %}
+      <option value="{{ valor }}"{% if canal == valor %} selected{% endif %}>{{ etiqueta }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button class="boton" type="submit">Buscar</button>
+</form>
+
+<p class="conteo" aria-live="polite">
+  {% if total == 1 %}1 resultado{% else %}{{ total }} resultados{% endif %}
+  {% if busqueda or dependencia_id or canal %}· <a href="{% url 'catalogo:catalogo' municipio.slug %}">Quitar filtros</a>{% endif %}
+</p>
+
+<ul class="lista">
+  {% for t in pagina %}
+  <li>
+    <a class="tarjeta" href="{{ t.get_absolute_url }}">
+      <span class="tarjeta__titulo">{{ t.nombre }}</span>
+      <span class="tarjeta__dato">{{ t.dependencia.nombre }}</span>
+      <span class="etiquetas">
+        <span class="etiqueta{% if t.canal != 'presencial' %} etiqueta--linea{% endif %}">{{ t.get_canal_display }}</span>
+        <span class="etiqueta">{{ t.get_tipo_display }}</span>
+        {% if t.es_gratuito %}<span class="etiqueta">Gratuito</span>{% endif %}
+        {% if not t.publicado %}<span class="etiqueta etiqueta--aviso">Ficha en levantamiento</span>{% endif %}
+      </span>
+    </a>
+  </li>
+  {% empty %}
+  <li class="vacio">No encontramos trámites con esa búsqueda. Prueba con otra palabra o quita los filtros.</li>
+  {% endfor %}
+</ul>
+
+{% if pagina.has_other_pages %}
+<nav class="paginas" aria-label="Páginas de resultados">
+  {% if pagina.has_previous %}<a class="boton boton--claro" href="?{% if parametros %}{{ parametros }}&amp;{% endif %}pagina={{ pagina.previous_page_number }}">Anterior</a>{% endif %}
+  <span>Página {{ pagina.number }} de {{ pagina.paginator.num_pages }}</span>
+  {% if pagina.has_next %}<a class="boton boton--claro" href="?{% if parametros %}{{ parametros }}&amp;{% endif %}pagina={{ pagina.next_page_number }}">Siguiente</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block titulo %}{{ tramite.nombre }} · {{ municipio.nombre }}{% endblock %}
+{% block contenido %}
+<nav class="migas" aria-label="Ruta">
+  <a href="{% url 'catalogo:catalogo' municipio.slug %}">Catálogo de {{ municipio.nombre }}</a> ›
+  <a href="{% url 'catalogo:catalogo' municipio.slug %}?dependencia={{ tramite.dependencia.id }}">{{ tramite.dependencia.nombre }}</a>
+</nav>
+
+<h1>{{ tramite.nombre }}</h1>
+<p class="etiquetas">
+  <span class="etiqueta{% if tramite.canal != 'presencial' %} etiqueta--linea{% endif %}">{{ tramite.get_canal_display }}</span>
+  <span class="etiqueta">{{ tramite.get_tipo_display }}</span>
+  <span class="etiqueta">Clave {{ tramite.clave }}</span>
+</p>
+
+{% if not tramite.publicado %}
+<div class="aviso" role="note">
+  <strong>Ficha en levantamiento.</strong>
+  El ayuntamiento está capturando los requisitos, el costo y el plazo oficiales de este trámite.
+  Mientras tanto, confírmalos con la dependencia antes de acudir.
+</div>
+{% endif %}
+
+{% if tramite.descripcion %}<p class="entrada">{{ tramite.descripcion|linebreaksbr }}</p>{% endif %}
+
+<dl class="datos">
+  <div><dt>Dependencia responsable</dt><dd>{{ tramite.dependencia.nombre }}</dd></div>
+  {% if tramite.costo is not None %}
+  <div><dt>Costo</dt><dd>{% if tramite.es_gratuito %}Gratuito{% else %}${{ tramite.costo }}{% endif %}{% if tramite.costo_detalle %}<br><small>{{ tramite.costo_detalle }}</small>{% endif %}</dd></div>
+  {% endif %}
+  {% if tramite.formas_pago %}<div><dt>Formas de pago</dt><dd>{{ tramite.formas_pago }}</dd></div>{% endif %}
+  {% if tramite.plazo_resolucion_dias is not None %}
+  <div><dt>Tiempo de respuesta</dt><dd>{% if tramite.plazo_resolucion_dias == 0 %}El mismo día{% else %}{{ tramite.plazo_resolucion_dias }} día{{ tramite.plazo_resolucion_dias|pluralize }} hábil{{ tramite.plazo_resolucion_dias|pluralize:"es" }}{% endif %}{% if tramite.ficta != 'no_aplica' %}<br><small>Si no hay respuesta en ese plazo: {{ tramite.get_ficta_display|lower }}</small>{% endif %}</dd></div>
+  {% endif %}
+  {% if tramite.vigencia %}<div><dt>Vigencia</dt><dd>{{ tramite.vigencia }}</dd></div>{% endif %}
+  {% if tramite.modalidad %}<div><dt>Modalidad</dt><dd>{{ tramite.modalidad }}</dd></div>{% endif %}
+  {% if tramite.oficinas %}<div><dt>Dónde se realiza</dt><dd>{{ tramite.oficinas|linebreaksbr }}</dd></div>{% endif %}
+  {% if tramite.horarios %}<div><dt>Horario</dt><dd>{{ tramite.horarios }}</dd></div>{% endif %}
+  {% if tramite.contacto %}<div><dt>Contacto</dt><dd>{{ tramite.contacto }}</dd></div>{% endif %}
+  {% if tramite.inspeccion %}<div><dt>Inspección o verificación</dt><dd>{{ tramite.inspeccion|linebreaksbr }}</dd></div>{% endif %}
+</dl>
+
+{% if requisitos %}
+<h2>Requisitos</h2>
+<ol class="requisitos">
+  {% for r in requisitos %}
+  <li>
+    <span class="requisitos__nombre">{{ r.nombre }}</span>
+    <span class="requisitos__detalle">{{ r.get_formato_display }}{% if r.fundamento %} · {{ r.fundamento }}{% endif %}</span>
+  </li>
+  {% endfor %}
+</ol>
+{% endif %}
+
+{% if tramite.fundamento %}
+<h2>Fundamento jurídico</h2>
+<p>{{ tramite.fundamento|linebreaksbr }}</p>
+{% endif %}
+
+<p class="nota">Última actualización de esta ficha: {{ tramite.actualizado|date:"j \d\e F \d\e Y"|lower }}.</p>
+{% endblock %}

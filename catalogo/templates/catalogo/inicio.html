@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block contenido %}
+<section class="portada">
+  <h1>Trámites y servicios de tu municipio</h1>
+  <p class="entrada">Consulta qué necesitas, cuánto cuesta y cuánto tarda cada trámite antes de salir de casa.</p>
+</section>
+<h2 class="subtitulo">Elige tu municipio</h2>
+<ul class="rejilla">
+  {% for m in municipios %}
+  <li>
+    <a class="tarjeta tarjeta--municipio" href="{% url 'catalogo:catalogo' m.slug %}">
+      <span class="tarjeta__titulo">{{ m.nombre }}</span>
+      <span class="tarjeta__dato">{{ m.estado }} · {{ m.total }} trámites y servicios</span>
+    </a>
+  </li>
+  {% empty %}
+  <li class="vacio">Aún no hay municipios dados de alta.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

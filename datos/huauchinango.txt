@@ -1,0 +1,113 @@
+# clave|dependencia|nombre|ruta
+HUA-001|Registro Civil|Expedición de extractos|A
+HUA-002|Transparencia|Acceso a la información|A
+HUA-003|Transparencia|Ejercicio de derechos ARCO|A
+HUA-004|Transparencia|Recurso de revisión|A
+HUA-005|Organismo de agua|Pago del servicio de agua|B
+HUA-006|Organismo de agua|Aclaraciones de consumo y pagos|B
+HUA-007|Organismo de agua|Constancia de no adeudo|B
+HUA-008|Organismo de agua|Constancia de no servicio (Huauchinango)|B
+HUA-009|Organismo de agua|Constancia de no servicio (localidades aledañas)|B
+HUA-010|Organismo de agua|Descuento INAPAM|B
+HUA-011|Organismo de agua|Reporte de fuga en línea general|B
+HUA-012|Organismo de agua|Reporte de fuga en toma de usuario|B
+HUA-013|Organismo de agua|Reporte de drenaje tapado|B
+HUA-014|Secretaría General|Constancia de domicilio|B
+HUA-015|Secretaría General|Constancia de domicilio comercial|B
+HUA-016|Secretaría General|Constancia de vecindad|B
+HUA-017|Secretaría General|Constancia de radicación|B
+HUA-018|Secretaría General|Constancia de origen|B
+HUA-019|Secretaría General|Constancia de ingresos|B
+HUA-020|Secretaría General|Constancia de ingresos para becas|B
+HUA-021|Secretaría General|Constancia de modo honesto de vivir|B
+HUA-022|Secretaría General|Constancia de buena conducta|B
+HUA-023|Secretaría General|Constancia de inexistencia de matrícula del SMN|B
+HUA-024|Vialidad y Tránsito|Constancia de no infracción|B
+HUA-025|Vialidad y Tránsito|Pago de trámites e infracciones|B
+HUA-026|Tesorería|Cobro de trámites y servicios (pasarela de pago)|B
+HUA-027|Registro Civil|Constancia de soltería|B
+HUA-028|Registro Civil|Búsquedas|B
+HUA-029|Panteón|Refrendos|B
+HUA-030|Parquímetros|Parquímetros|B
+HUA-031|Obras Públicas|Reporte de alumbrado público|B
+HUA-032|Protección Civil|Reporte de poste en riesgo de caer|B
+HUA-033|Seguridad Ciudadana|Denuncia ciudadana|B
+HUA-034|Transparencia|Orientación y asesoría en transparencia|B
+HUA-035|Educación|Credencial de biblioteca|B
+HUA-036|Juventud|Tarjeta Joven|B
+HUA-037|Deportes|Préstamo de áreas deportivas|B
+HUA-038|Organismo de agua|Tomas nuevas|C
+HUA-039|Organismo de agua|Activación de toma|C
+HUA-040|Organismo de agua|Reubicación de toma|C
+HUA-041|Organismo de agua|Regularización de toma|C
+HUA-042|Organismo de agua|Constancia de factibilidad de servicio|C
+HUA-043|Organismo de agua|Derechos de conexión a la red (doméstica)|C
+HUA-044|Organismo de agua|Derechos de conexión a la red (comercial)|C
+HUA-045|Organismo de agua|Derechos de conexión a la red (industrial)|C
+HUA-046|Organismo de agua|Derechos de activación por toma|C
+HUA-047|Organismo de agua|Derechos de reubicación por toma|C
+HUA-048|Organismo de agua|Derechos de descarga de drenaje (doméstico)|C
+HUA-049|Organismo de agua|Derechos de descarga de drenaje (comercial)|C
+HUA-050|Organismo de agua|Derechos de descarga de drenaje (industrial)|C
+HUA-051|Secretaría General|Constancia de identidad|C
+HUA-052|Secretaría General|Constancia de identidad de extranjero|C
+HUA-053|Secretaría General|Constancia de dependencia económica|C
+HUA-054|Secretaría General|Constancia de concubinato|C
+HUA-055|Secretaría General|Constancia de vecindad para registro extemporáneo|C
+HUA-056|Secretaría General|Constancia de supervivencia|C
+HUA-057|Secretaría General|Constancia de productor|C
+HUA-058|Secretaría General|Constancia de posesión|C
+HUA-059|Secretaría General|Constancia de pertenencia a comunidad indígena|C
+HUA-060|Secretaría General|Constancia de fierro marcador|C
+HUA-061|Secretaría General|Constancia de fierro no quemador|C
+HUA-062|Comercio y Abasto|Certificados y licencias de funcionamiento|C
+HUA-063|Catastro|Alineamiento|C
+HUA-064|Catastro|Número oficial|C
+HUA-065|Catastro|Constancia de cambio de uso de suelo|C
+HUA-066|Catastro|Constancia de segregación|C
+HUA-067|Ecología|Licencia de derribo|C
+HUA-068|Ecología|Servicio especial de recolección y disposición de residuos|C
+HUA-069|Ecología|Servicio especial de barrido en eventos|C
+HUA-070|Ecología|Recolección, transporte y disposición de desechos sólidos|C
+HUA-071|Vialidad y Tránsito|Permiso de carga y descarga|C
+HUA-072|Vialidad y Tránsito|Permiso para circular sin placas|C
+HUA-073|Vialidad y Tránsito|Cierre de calle|C
+HUA-074|Vialidad y Tránsito|Permiso de estacionamiento|C
+HUA-075|Protección Civil|Dictamen de liberación de repartidoras de gas L.P.|C
+HUA-076|Protección Civil|Comercio seguro|C
+HUA-077|Protección Civil|Quema de artificios pirotécnicos|C
+HUA-078|Panteón|Cambio de propietario|C
+HUA-079|Panteón|Certificado de propiedad|C
+HUA-080|Panteón|Construcciones|C
+HUA-081|Centro Penitenciario|Alta de visita familiar|C
+HUA-082|Centro Penitenciario|Alta de visita íntima|C
+HUA-083|Centro Penitenciario|Constancia de reclusión|C
+HUA-084|DIF|Tarjetón de discapacidad|C
+HUA-085|DIF|Credencial INAPAM|C
+HUA-086|DIF|Programa Rescate Nutricio|C
+HUA-087|DIF|Programa INCONUT|C
+HUA-088|DIF|Apoyo alimentario a personas con discapacidad|C
+HUA-089|DIF|Apoyo alimentario PAMEL|C
+HUA-090|DIF|Apoyo alimentario a adultos mayores|C
+HUA-091|Deportes|Creación de ligas deportivas|C
+HUA-092|Catastro|Licencia de construcción|D
+HUA-093|Catastro|Terminación de obra|D
+HUA-094|Protección Civil|Validación de riesgo para construcción o escrituración|D
+HUA-095|Protección Civil|Validación de programa interno de protección civil|D
+HUA-096|Protección Civil|Inspección estructural|D
+HUA-097|Registro Civil|Registro de matrimonio|D
+HUA-098|Registro Civil|Registro de nacimiento|D
+HUA-099|Registro Civil|Registro de divorcio|D
+HUA-100|Registro Civil|Registro de defunción|D
+HUA-101|Registro Civil|Reconocimiento de hijos|D
+HUA-102|Registro Civil|Presentación matrimonial|D
+HUA-103|Registro Civil|Anotaciones marginales|D
+HUA-104|Panteón|Inhumaciones|D
+HUA-105|Panteón|Exhumaciones|D
+HUA-106|Secretaría General|Cartilla de identidad del SMN|D
+HUA-107|Bienestar|Solicitud de programas|D
+HUA-108|DIF|Donación de aparatos rehabilitatorios (programa)|D
+HUA-109|DIF|Donación de aparatos ortopédicos|D
+HUA-110|DIF|Apoyo económico para estudios y medicamentos|D
+HUA-111|DIF|Apoyo económico para gastos funerarios|D
+HUA-112|DIF|Apoyo económico para pasajes a consultas|D

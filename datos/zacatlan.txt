@@ -1,0 +1,91 @@
+# clave|dependencia|nombre|ruta
+T01MZACCORC2026|Registro Civil|Extracto de nacimiento, matrimonio y defunción|A
+T01MZACDING2026|Ingresos|Recaudación del impuesto predial|A
+T01MZACUTRN2026|Transparencia|Solicitud de acceso a la información pública|A
+T02MZACUTRN2026|Transparencia|Solicitud de derechos ARCO|A
+S03MZACCAM2026|Archivo Municipal|Repositorio web de actas de cabildo|A
+S02MZACCAM2026|Archivo Municipal|Consulta de información histórica por correo|A
+T04MZACSGAT2026|Secretaría|Constancia de domicilio|B
+T10MZACSGAT2026|Secretaría|Constancia de residencia|B
+T11MZACSGAT2026|Secretaría|Constancia de vecindad|B
+T09MZACSGAT2026|Secretaría|Constancia de origen|B
+T06MZACSGAT2026|Secretaría|Constancia de ingresos|B
+T07MZACSGAT2026|Secretaría|Constancia de modo honesto de vivir|B
+T08MZACSGAT2026|Secretaría|Constancia de no adeudo de predial|B
+S01MZACCM2026|Contraloría Municipal|Denuncia ciudadana|B
+T01MZACCM2026|Contraloría Municipal|Inscripción al padrón de proveedores|B
+T02MZACCM2026|Contraloría Municipal|Revalidación del padrón de proveedores|B
+T03MZACCM2026|Contraloría Municipal|Inscripción al padrón de contratistas|B
+T04MZACCM2026|Contraloría Municipal|Revalidación del padrón de contratistas|B
+S01MZACDSPB2026|Servicios Públicos|Alumbrado público (reporte)|B
+S02MZACDSPB2026|Servicios Públicos|Parques y jardines (reporte)|B
+S04MZACDSPB2026|Servicios Públicos|Recolección de residuos y barrido|B
+T04MZACDCM2025|Catastro|Cédula catastral|B
+T01MZACRH2026|Recursos Humanos|Carta de aceptación de servicio social o prácticas|B
+T02MZACRH2026|Recursos Humanos|Carta de liberación de servicio social o prácticas|B
+T08MZACCORC2026|Registro Civil|Constancia de no matrimonio o soltería|B
+T10MZACCORC2026|Registro Civil|Constancia de no registro|B
+T09MZACCORC2026|Registro Civil|Copia fiel del libro|B
+S01MZACCCFD2026|Cultura Física y Deporte|Uso de espacios deportivos|B
+T01MZACCPPS2026|Promoción y Prevención de la Salud|Informes de norma sanitaria para comerciantes|B
+T04MZACDPCB2026|Protección Civil y Bomberos|Opinión técnica de árbol en riesgo|B
+S01MZACCTM2026|Tránsito Municipal|Infracciones (consulta y pago)|B
+T02MZACSGAT2026|Secretaría|Constancia de concubinato|C
+T03MZACSGAT2026|Secretaría|Constancia de dependencia económica|C
+T05MZACSGAT2026|Secretaría|Constancia de identidad|C
+T12MZACSGAT2026|Secretaría|Fe testimonial|C
+T01MZACSGAT2026|Secretaría|Constancia de ascendencia indígena|C
+T01MZACDNOM2026|Normatividad|Licencia de funcionamiento|C
+T02MZACDNOM2026|Normatividad|Cédula de empadronamiento|C
+T03MZACDNOM2026|Normatividad|Credencial de vendedor ambulante|C
+T04MZACDDU2026|Desarrollo Urbano|Licencia de alineamiento|C
+T08MZACDDU2026|Desarrollo Urbano|Asignación de número provisional|C
+T07MZACDDU2026|Desarrollo Urbano|Factibilidad de uso de suelo|C
+T06MZACDDU2026|Desarrollo Urbano|Licencia de uso de suelo|C
+T10MZACDDU2026|Desarrollo Urbano|Constancia de preexistencia|C
+T01MZACDDU2026|Desarrollo Urbano|Permiso de anuncios temporales|C
+T14MZACDDU2026|Desarrollo Urbano|Permiso de toldos temporales|C
+T01MZACDPCB2026|Protección Civil y Bomberos|Liberación de Protección Civil|C
+T03MZACDPCB2026|Protección Civil y Bomberos|Protección Civil para locales|C
+T06MZACDPCB2026|Protección Civil y Bomberos|Liberación de riesgo para pirotecnia|C
+T01MZACDCM2025|Catastro|Avalúo de actualización|C
+T01MZACDSPB2026|Servicios Públicos|Permiso de construcción de gavetas|C
+T02MZACDSPB2026|Servicios Públicos|Permiso de construcción de capillas|C
+T03MZACDSPB2026|Servicios Públicos|Título de fosa a perpetuidad|C
+S05MZACCTM2026|Tránsito Municipal|Liberación de vehículos|C
+T01MZACCCFD2026|Cultura Física y Deporte|Eventos deportivos y activaciones|C
+T06MZACSMDIF2026|Sistema DIF Municipal|Oficio de descuento de pasaje|C
+T04MZACSMDIF2026|Sistema DIF Municipal|Programas alimentarios DEC|C
+T05MZACSMDIF2026|Sistema DIF Municipal|Programas alimentarios|C
+T02MZACDDU2026|Desarrollo Urbano|Licencia de construcción zona urbana y suburbana|D
+T03MZACDDU2026|Desarrollo Urbano|Licencia de construcción Centro Histórico|D
+T05MZACDDU2026|Desarrollo Urbano|Aprobación de proyecto|D
+T09MZACDDU2026|Desarrollo Urbano|Terminación de obra|D
+T11MZACDDU2026|Desarrollo Urbano|Licencia de división de predio|D
+T12MZACDDU2026|Desarrollo Urbano|Fusión de predio|D
+T13MZACDDU2026|Desarrollo Urbano|Permiso de fraccionamiento o lotificación|D
+T02MZACDCM2025|Catastro|Avalúo de movimiento notarial|D
+T03MZACDCM2025|Catastro|Avalúo de empadronamiento|D
+T05MZACDCM2025|Catastro|Registro único de inspección|D
+T02MZACDPCB2026|Protección Civil y Bomberos|Aprobación de programa interno de protección civil|D
+T05MZACDPCB2026|Protección Civil y Bomberos|Factibilidad de no riesgo para construcción|D
+T01MZACDMA2026|Medio Ambiente|Concesión para uso de relleno sanitario|D
+T02MZACDMA2026|Medio Ambiente|Informe ambiental|D
+T02MZACCORC2026|Registro Civil|Registro de menores de edad|D
+T03MZACCORC2026|Registro Civil|Registro de mayores de 18 años|D
+T04MZACCORC2026|Registro Civil|Registro de defunción e inhumación o traslado|D
+T05MZACCORC2026|Registro Civil|Registro de matrimonio|D
+T06MZACCORC2026|Registro Civil|Registro de reconocimiento|D
+T07MZACCORC2026|Registro Civil|Registro de divorcio|D
+T04MZACDSPB2026|Servicios Públicos|Inhumación en fosa a perpetuidad|D
+T05MZACDSPB2026|Servicios Públicos|Exhumación|D
+T06MZACDSPB2026|Servicios Públicos|Traslado de restos|D
+T07MZACDSPB2026|Servicios Públicos|Regularización de lotes de panteón|D
+S03MZACSM2025|Sindicatura Municipal|Apeos y deslindes|D
+S01MZACCBS2026|Bienestar Social|Apoyo a mejoramiento de vivienda|D
+S02MZACCBS2026|Bienestar Social|Apoyo a mejoramiento social|D
+S01MZACJOP2026|Presidencia|Apoyos sociales a la ciudadanía|D
+T03MZACSMDIF2026|Sistema DIF Municipal|Trámite de ayudas sociales|D
+T01MZACSMDIF2026|Sistema DIF Municipal|Donación de aparatos ortopédicos y auditivos|D
+T01MZACCAPI2026|Atención a Pueblos Indígenas|Proyectos culturales y productivos|D
+T02MZACCCFD2026|Cultura Física y Deporte|Gestión de proyectos|D

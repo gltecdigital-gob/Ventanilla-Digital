@@ -1,0 +1,115 @@
+/* Hoja de estilos única, sin fuentes ni imágenes externas: carga rápido con conexión lenta. */
+:root {
+  --tinta: #1c2421;
+  --tinta-suave: #55615c;
+  --fondo: #f6f4ef;
+  --papel: #ffffff;
+  --linea: #dcd8cd;
+  --acento: #0f5c4d;
+  --acento-fuerte: #0a4338;
+  --acento-tenue: #e3efeb;
+  --aviso: #8a5a00;
+  --aviso-tenue: #fbf1d9;
+  --radio: 10px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--tinta);
+  background: var(--fondo);
+}
+.ancho { width: min(100% - 2rem, 60rem); margin-inline: auto; }
+a { color: var(--acento); text-underline-offset: 0.15em; }
+a:hover { color: var(--acento-fuerte); }
+:focus-visible { outline: 3px solid #e0a100; outline-offset: 2px; border-radius: 4px; }
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.3rem); line-height: 1.15; margin: 1.5rem 0 0.75rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+small { color: var(--tinta-suave); }
+
+.saltar { position: absolute; left: -999px; top: 0; background: var(--papel); padding: 0.5rem 1rem; z-index: 10; }
+.saltar:focus { left: 0.5rem; top: 0.5rem; }
+
+.cabecera { background: var(--acento); color: #fff; }
+.cabecera__fila { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.75rem; }
+.marca { display: flex; align-items: center; gap: 0.75rem; color: #fff; text-decoration: none; }
+.marca:hover { color: #fff; }
+.marca__sello {
+  display: grid; place-items: center; width: 2.5rem; height: 2.5rem; flex: none;
+  border: 2px solid #fff; border-radius: 50%; font-weight: 700; font-size: 1.2rem;
+}
+.marca__nombre { display: block; font-weight: 700; line-height: 1.2; }
+.marca__lugar { display: block; font-size: 0.875rem; opacity: 0.9; line-height: 1.2; }
+.cabecera__enlace { color: #fff; font-weight: 600; }
+.cabecera__enlace:hover { color: #fff; }
+
+main { padding-bottom: 3rem; min-height: 60vh; }
+.portada { padding-top: 1rem; }
+.entrada { font-size: 1.15rem; color: var(--tinta-suave); max-width: 42rem; margin-top: 0; }
+.subtitulo { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tinta-suave); }
+
+.rejilla, .lista { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+.rejilla { grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+.tarjeta {
+  display: block; padding: 1rem 1.1rem; background: var(--papel); border: 1px solid var(--linea);
+  border-radius: var(--radio); text-decoration: none; color: inherit;
+  border-left: 5px solid var(--acento);
+}
+.tarjeta:hover { border-color: var(--acento); background: #fcfbf8; color: inherit; }
+.tarjeta__titulo { display: block; font-weight: 650; font-size: 1.1rem; line-height: 1.3; color: var(--acento-fuerte); }
+.tarjeta__dato { display: block; color: var(--tinta-suave); font-size: 0.95rem; margin-top: 0.15rem; }
+.tarjeta--municipio { padding: 1.4rem 1.25rem; }
+.tarjeta--municipio .tarjeta__titulo { font-size: 1.4rem; }
+
+.etiquetas { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.6rem 0 0; }
+.etiqueta {
+  font-size: 0.8rem; padding: 0.15rem 0.6rem; border-radius: 999px;
+  background: #eeece5; color: var(--tinta); white-space: nowrap;
+}
+.etiqueta--linea { background: var(--acento-tenue); color: var(--acento-fuerte); font-weight: 600; }
+.etiqueta--aviso { background: var(--aviso-tenue); color: var(--aviso); }
+
+.buscador {
+  display: grid; gap: 0.75rem; grid-template-columns: 1fr; align-items: end;
+  background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 1rem;
+}
+@media (min-width: 46rem) { .buscador { grid-template-columns: 2fr 1.4fr 1fr auto; } }
+.campo label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.25rem; }
+.campo input, .campo select {
+  width: 100%; font: inherit; padding: 0.6rem 0.7rem; border: 1px solid #a9a698;
+  border-radius: 8px; background: #fff; color: var(--tinta); min-height: 2.9rem;
+}
+.boton {
+  font: inherit; font-weight: 650; padding: 0.6rem 1.3rem; min-height: 2.9rem; border-radius: 8px;
+  border: 1px solid var(--acento); background: var(--acento); color: #fff; cursor: pointer; text-decoration: none;
+  display: inline-grid; place-items: center;
+}
+.boton:hover { background: var(--acento-fuerte); color: #fff; }
+.boton--claro { background: var(--papel); color: var(--acento); }
+.boton--claro:hover { background: var(--acento-tenue); color: var(--acento-fuerte); }
+.conteo { color: var(--tinta-suave); margin: 1rem 0 0.75rem; }
+.vacio { padding: 1.5rem; background: var(--papel); border: 1px dashed var(--linea); border-radius: var(--radio); color: var(--tinta-suave); }
+.paginas { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.5rem; }
+
+.migas { margin-top: 1.25rem; font-size: 0.95rem; color: var(--tinta-suave); }
+.aviso {
+  background: var(--aviso-tenue); border: 1px solid #e6cf94; border-left: 5px solid var(--aviso);
+  border-radius: var(--radio); padding: 0.9rem 1.1rem; margin: 1.25rem 0;
+}
+.datos { display: grid; gap: 0; margin: 1.5rem 0; background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); }
+.datos > div { display: grid; gap: 0.15rem; padding: 0.8rem 1.1rem; border-bottom: 1px solid var(--linea); }
+.datos > div:last-child { border-bottom: 0; }
+@media (min-width: 40rem) { .datos > div { grid-template-columns: 14rem 1fr; gap: 1rem; } }
+.datos dt { font-weight: 650; color: var(--tinta-suave); font-size: 0.95rem; }
+.datos dd { margin: 0; }
+.requisitos { padding-left: 1.4rem; }
+.requisitos li { margin-bottom: 0.6rem; }
+.requisitos__nombre { display: block; font-weight: 600; }
+.requisitos__detalle { display: block; color: var(--tinta-suave); font-size: 0.95rem; }
+.nota { color: var(--tinta-suave); font-size: 0.9rem; margin-top: 2rem; }
+
+.pie { border-top: 1px solid var(--linea); padding: 1.5rem 0 2.5rem; color: var(--tinta-suave); font-size: 0.9rem; background: #efece4; }
+.pie p { margin: 0 0 0.4rem; }

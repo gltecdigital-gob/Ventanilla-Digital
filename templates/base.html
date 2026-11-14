@@ -1,0 +1,36 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Trámites y servicios municipales{% endblock %}</title>
+  <meta name="description" content="{% block descripcion %}Catálogo de trámites y servicios municipales: requisitos, costos y plazos.{% endblock %}">
+  <link rel="stylesheet" href="{% static 'css/sitio.css' %}">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="cabecera">
+    <div class="ancho cabecera__fila">
+      <a class="marca" href="{% url 'catalogo:inicio' %}">
+        <span class="marca__sello" aria-hidden="true">T</span>
+        <span>
+          <span class="marca__nombre">Trámites digitales</span>
+          <span class="marca__lugar">{% if municipio %}{{ municipio.nombre }}, {{ municipio.estado }}{% else %}Plataforma municipal{% endif %}</span>
+        </span>
+      </a>
+      {% if municipio %}<a class="cabecera__enlace" href="{% url 'catalogo:catalogo' municipio.slug %}">Catálogo</a>{% endif %}
+    </div>
+  </header>
+  <main id="contenido" class="ancho">
+    {% block contenido %}{% endblock %}
+  </main>
+  <footer class="pie">
+    <div class="ancho">
+      {% if municipio %}
+        <p><strong>H. Ayuntamiento de {{ municipio.nombre }}</strong>{% if municipio.direccion %} · {{ municipio.direccion }}{% endif %}{% if municipio.telefono %} · Tel. {{ municipio.telefono }}{% endif %}</p>
+      {% endif %}
+      <p>Solo pueden exigirse los trámites, requisitos y costos publicados en este catálogo. Consultar el catálogo es gratuito.</p>
+    </div>
+  </footer>
+</body>
+</html>

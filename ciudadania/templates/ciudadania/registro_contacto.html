@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block titulo %}Tu medio de contacto · Trámites digitales{% endblock %}
+{% block contenido %}
+<div class="estrecho">
+  {% include "ciudadania/_pasos.html" %}
+  <h1>¿Dónde te enviamos tus códigos?</h1>
+  <p class="entrada">Cada vez que entres te mandaremos un código de 6 dígitos. También ahí recibirás los avisos de tus trámites.</p>
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <button class="boton" type="submit">Enviar código</button>
+  </form>
+</div>
+{% endblock %}

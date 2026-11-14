@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block titulo %}{{ titulo }} · Trámites digitales{% endblock %}
+{% block contenido %}
+<div class="estrecho">
+  {% include "ciudadania/_pasos.html" %}
+  <h1>{{ titulo }}</h1>
+  {% if neutral %}
+  <p class="entrada">Si esta CURP tiene una cuenta, enviamos un código de 6 dígitos al correo o celular registrado. Vence en 10 minutos.</p>
+  {% else %}
+  <p class="entrada">Enviamos un código de 6 dígitos a <strong>{{ destino }}</strong>. Vence en 10 minutos.</p>
+  {% endif %}
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <button class="boton" type="submit">Confirmar</button>
+  </form>
+  <p class="nota">¿No llegó? Revisa tu correo no deseado o <a href="{% url reenviar %}">pide otro código</a>.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "ventanilla/_base.html" %}
+{% block contenido %}
+<div class="estrecho">
+  <h1>{{ persona.nombre_completo }}</h1>
+  <dl class="datos">
+    <div><dt>CURP</dt><dd>{{ persona.curp }}</dd></div>
+    <div><dt>Nivel de confianza</dt><dd>{{ persona.get_nivel_confianza_display }}</dd></div>
+    <div><dt>Contacto</dt><dd>{% if destino %}{{ destino }} (confirmado){% else %}Sin contacto confirmado · <a href="{% url 'ventanilla:contacto' persona.curp %}">Registrar contacto</a>{% endif %}</dd></div>
+    <div><dt>Estado</dt><dd>{% if persona.activa %}Activa{% else %}Suspendida{% endif %}</dd></div>
+  </dl>
+  {% if destino %}<p><a href="{% url 'ventanilla:contacto' persona.curp %}">Cambiar el medio de contacto</a></p>{% endif %}
+
+  {% if verificaciones %}
+  <h2>Verificaciones anteriores</h2>
+  <ul class="lista-simple">{% for v in verificaciones %}<li>{{ v.fecha|date:"d/m/Y" }} · {{ v.municipio }} · {{ v.get_tipo_identificacion_display }}</li>{% endfor %}</ul>
+  {% endif %}
+
+  <h2>{% if persona.nivel_confianza >= 2 %}Verificar de nuevo{% else %}Verificar identidad para subir a nivel 2{% endif %}</h2>
+  {% include "ventanilla/_verificacion.html" %}
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <button class="boton" type="submit">Registrar verificación</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Confirma que eres tú · Trámites digitales{% endblock %}
+{% block contenido %}
+<div class="estrecho">
+  {% include "ciudadania/_pasos.html" %}
+  <h1>Confirma que eres tú</h1>
+  <p class="entrada">RENAPO encontró la CURP <strong>{{ curp_oculta }}</strong>. Escribe tu nombre como aparece en tu acta de nacimiento.</p>
+  {% if simulada %}<p class="aviso">Ambiente de pruebas: el simulador de RENAPO responde con el nombre <strong>Persona de prueba</strong> y el apellido <strong>Simulada</strong>.</p>{% endif %}
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <button class="boton" type="submit">Continuar</button>
+  </form>
+</div>
+{% endblock %}

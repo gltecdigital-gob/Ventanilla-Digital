@@ -35,7 +35,9 @@ GRUPOS = {
         "nucleo.add_dependencia", "nucleo.change_dependencia", "nucleo.view_dependencia",
         "nucleo.change_municipio", "nucleo.view_municipio", "nucleo.view_eventobitacora",
         "cuentas.add_usuario", "cuentas.change_usuario", "cuentas.view_usuario",
+        "ciudadania.verificar_identidad",
     ],
+    "Ventanilla": ["ciudadania.verificar_identidad", "catalogo.view_tramite"],
     "Enlace de dependencia": [
         "catalogo.change_tramite", "catalogo.view_tramite",
         "catalogo.add_requisito", "catalogo.change_requisito", "catalogo.delete_requisito", "catalogo.view_requisito",

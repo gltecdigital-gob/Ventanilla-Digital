@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block titulo %}Entrar con tu CURP · Trámites digitales{% endblock %}
+{% block contenido %}
+<div class="estrecho">
+  <h1>Entra con tu CURP</h1>
+  <p class="entrada">Te enviaremos un código de 6 dígitos al correo o celular de tu cuenta.</p>
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <button class="boton" type="submit">Enviar código</button>
+  </form>
+  <p class="nota">¿Aún no tienes cuenta? <a href="{% url 'ciudadania:registro_curp' %}">Créala aquí</a>. ¿Cambiaste de correo o celular? Acude a la ventanilla de tu ayuntamiento.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block titulo %}Entrar · Trámites digitales{% endblock %}
+{% block contenido %}
+<div class="estrecho">
+  <h1>Entra para hacer tus trámites</h1>
+  <p class="entrada">Usa tu CURP. Un solo perfil sirve para todos los municipios de la plataforma.</p>
+
+  <a class="boton boton--grande" href="{% url 'ciudadania:llave_mx' %}">Entrar con Llave MX</a>
+  <p class="ayuda">La cuenta del Gobierno de México. Si ya la tienes, es la forma más rápida y te da más nivel de confianza.</p>
+
+  <div class="separador"><span>o con tu cuenta municipal</span></div>
+
+  <a class="boton boton--claro boton--grande" href="{% url 'ciudadania:acceso' %}">Entrar con mi CURP</a>
+  <p class="ayuda">Te enviamos un código a tu correo o celular cada vez que entras. No necesitas contraseña.</p>
+
+  <p>¿Primera vez? <a href="{% url 'ciudadania:registro_curp' %}">Crea tu cuenta municipal</a>.</p>
+  <p class="nota">¿No tienes internet, correo ni celular? Acude a la ventanilla de tu ayuntamiento con una identificación y te registran ahí.</p>
+</div>
+{% endblock %}

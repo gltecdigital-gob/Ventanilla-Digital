@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titulo %}Buzón de pruebas{% endblock %}
+{% block contenido %}
+<div class="aviso"><strong>Solo en desarrollo.</strong> Aquí aparecen los correos y mensajes de texto que en producción saldrían al proveedor real.</div>
+<h1>Buzón de pruebas</h1>
+<table class="tabla">
+  <thead><tr><th>Fecha</th><th>Canal</th><th>Para</th><th>Mensaje</th></tr></thead>
+  <tbody>
+  {% for m in mensajes %}
+  <tr><td>{{ m.creado|date:"d/m H:i:s" }}</td><td>{{ m.get_canal_display }}</td><td>{{ m.destino }}</td><td><strong>{{ m.asunto }}</strong><br>{{ m.texto }}</td></tr>
+  {% empty %}
+  <tr><td colspan="4">Sin mensajes.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

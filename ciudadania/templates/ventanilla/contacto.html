@@ -1,0 +1,22 @@
+{% extends "ventanilla/_base.html" %}
+{% block contenido %}
+<div class="estrecho">
+  <h1>Medio de contacto de {{ persona.nombres|title }}</h1>
+  <p class="entrada">Así la persona podrá entrar en línea con su CURP. El código llega a su teléfono o correo y ella te lo dicta.</p>
+  {% if enviado_a %}
+  <p>Enviamos un código a <strong>{{ enviado_a }}</strong>.</p>
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    <input type="hidden" name="accion" value="verificar">
+    {% with form=form_codigo %}{% include "_campos.html" %}{% endwith %}
+    <button class="boton" type="submit">Confirmar contacto</button>
+  </form>
+  <h2>¿Otro dato?</h2>
+  {% endif %}
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    <input type="hidden" name="accion" value="enviar">
+    {% with form=form_contacto %}{% include "_campos.html" %}{% endwith %}
+    <button class="boton {% if enviado_a %}boton--claro{% endif %}" type="submit">Enviar código</button>
+  </form>
+  <p><a href="{% url 'ventanilla:persona' persona.curp %}">Omitir: la persona no tiene correo ni celular</a></p>
+</div>
+{% endblock %}

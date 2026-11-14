@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block titulo %}Mi cuenta · Trámites digitales{% endblock %}
+{% block contenido %}
+<h1>Hola, {{ persona.nombres|title }}</h1>
+
+<section class="nivel nivel--{{ nivel_sesion }}" aria-labelledby="titulo-nivel">
+  <h2 id="titulo-nivel">Tu nivel de confianza en esta sesión: {{ nivel_sesion }} de 3</h2>
+  <ol class="nivel__escala">
+    <li class="{% if nivel_sesion >= 1 %}logrado{% endif %}"><strong>1. Básico</strong><span>Consultas, citas, reportes y pagos</span></li>
+    <li class="{% if nivel_sesion >= 2 %}logrado{% endif %}"><strong>2. Verificado</strong><span>Constancias, padrones y solicitudes</span></li>
+    <li class="{% if nivel_sesion >= 3 %}logrado{% endif %}"><strong>3. Alto</strong><span>Licencias y trámites patrimoniales</span></li>
+  </ol>
+  {% if nivel_sesion < 2 %}
+  <p><strong>Para subir a nivel 2:</strong> {% if not tiene_llave %}entra con <a href="{% url 'ciudadania:llave_mx' %}">Llave MX</a>, o {% endif %}acude una sola vez a la ventanilla del ayuntamiento con una identificación oficial con fotografía.</p>
+  {% elif nivel_sesion < 3 %}
+  <p><strong>Para nivel 3:</strong> entra con Llave MX Verificada.</p>
+  {% endif %}
+</section>
+
+<h2>Tus datos</h2>
+<p class="ayuda">Vienen del Registro Nacional de Población y no se pueden editar aquí. Si hay un error, corrígelo ante RENAPO.</p>
+<dl class="datos">
+  <div><dt>Nombre</dt><dd>{{ persona.nombre_completo }}</dd></div>
+  <div><dt>CURP</dt><dd>{{ persona.curp }}</dd></div>
+  {% if persona.fecha_nacimiento %}<div><dt>Fecha de nacimiento</dt><dd>{{ persona.fecha_nacimiento|date:"j \d\e F \d\e Y"|lower }}</dd></div>{% endif %}
+  <div><dt>Recibes tus códigos en</dt><dd>{% if destino %}{{ destino }}{% else %}Sin medio de contacto confirmado{% endif %}</dd></div>
+  <div><dt>Formas de entrar</dt><dd>{% for i in identidades %}{{ i.get_proveedor_display }}{% if not forloop.last %}, {% endif %}{% endfor %}</dd></div>
+  {% if persona.renapo_simulado %}<div><dt>Validación</dt><dd><span class="etiqueta etiqueta--aviso">Simulador de RENAPO (ambiente de pruebas)</span></dd></div>{% endif %}
+</dl>
+{% if not tiene_llave %}<p><a href="{% url 'ciudadania:llave_mx' %}">Vincular mi Llave MX</a></p>{% endif %}
+
+<h2>Quién ha usado tu cuenta o consultado tus datos</h2>
+{% if eventos %}
+<table class="tabla">
+  <thead><tr><th>Fecha</th><th>Qué pasó</th><th>Quién</th></tr></thead>
+  <tbody>
+  {% for e in eventos %}
+  <tr><td>{{ e.fecha|date:"d/m/Y H:i" }}</td><td>{{ e.get_accion_display }}</td><td>{% if e.usuario %}Personal de {{ e.municipio|default:"la plataforma" }}{% else %}Tú{% endif %}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+<p class="nota">Si ves algo que no reconoces, acude a la ventanilla de tu ayuntamiento.</p>
+
+<form method="post" action="{% url 'ciudadania:salir' %}">{% csrf_token %}<button class="boton boton--claro" type="submit">Cerrar sesión</button></form>
+{% endblock %}

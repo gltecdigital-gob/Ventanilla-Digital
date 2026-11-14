@@ -1,0 +1,12 @@
+{% extends "ventanilla/_base.html" %}
+{% block contenido %}
+<div class="estrecho">
+  <h1>Ventanilla asistida</h1>
+  <p class="entrada">Registra o verifica en persona a quien no puede hacerlo en línea. Pide la CURP y una identificación oficial con fotografía.</p>
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <button class="boton" type="submit">Buscar</button>
+  </form>
+  <p class="nota">Cada búsqueda y cada consulta queda registrada a tu nombre en la bitácora, y la persona puede verla en su cuenta.</p>
+</div>
+{% endblock %}

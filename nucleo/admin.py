@@ -34,9 +34,9 @@ class DependenciaAdmin(AdminMunicipal):
 class EventoBitacoraAdmin(admin.ModelAdmin):
     """La bitácora solo se consulta."""
 
-    list_display = ("fecha", "accion", "descripcion", "usuario", "municipio", "ip")
+    list_display = ("fecha", "accion", "descripcion", "usuario", "persona", "municipio", "ip")
     list_filter = ("accion", "municipio")
-    search_fields = ("descripcion", "usuario__username")
+    search_fields = ("descripcion", "usuario__username", "persona__curp")
     date_hierarchy = "fecha"
 
     def get_list_filter(self, request):
@@ -46,7 +46,7 @@ class EventoBitacoraAdmin(admin.ModelAdmin):
         return filtros
 
     def get_queryset(self, request):
-        qs = super().get_queryset(request).select_related("usuario", "municipio")
+        qs = super().get_queryset(request).select_related("usuario", "municipio", "persona")
         if request.user.is_superuser:
             return qs
         municipio = municipio_de(request)

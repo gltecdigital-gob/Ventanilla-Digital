@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titulo %}Aviso de privacidad · Trámites digitales{% endblock %}
+{% block contenido %}
+<div class="estrecho">
+  {% if not sin_pasos %}{% include "ciudadania/_pasos.html" %}{% endif %}
+  <h1>Antes de terminar</h1>
+  <div class="caja">
+    <p>Con tu cuenta guardamos los datos de tu CURP que nos da RENAPO, tu medio de contacto y los trámites que hagas. Los usamos solo para tus trámites municipales.</p>
+    <p>Cada vez que un servidor público consulta tus datos queda registrado, y puedes verlo en tu cuenta.</p>
+    <p><a href="{% url 'privacidad' %}" target="_blank" rel="noopener">Lee el aviso de privacidad completo</a>.</p>
+  </div>
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <button class="boton" type="submit">{% if sin_pasos %}Aceptar y continuar{% else %}Crear mi cuenta{% endif %}</button>
+  </form>
+</div>
+{% endblock %}

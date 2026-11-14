@@ -13,11 +13,19 @@ class Municipio(models.Model):
     direccion = models.CharField("dirección", max_length=200, blank=True)
     activo = models.BooleanField(default=True)
 
+    SLUGS_RESERVADOS = {"panel", "cuenta", "ventanilla", "simuladores", "privacidad", "salud", "static", "media"}
+
     class Meta:
         ordering = ["nombre"]
 
     def __str__(self):
         return self.nombre
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+
+        if self.slug in self.SLUGS_RESERVADOS:
+            raise ValidationError({"slug": "Esa dirección está reservada por la plataforma."})
 
 
 class ModeloMunicipal(models.Model):
@@ -58,11 +66,21 @@ class EventoBitacora(models.Model):
         PUBLICAR = "publicar", "Publicar"
         ACCESO = "acceso", "Inicio de sesión"
         ACCESO_FALLIDO = "acceso_fallido", "Intento de acceso fallido"
+        REGISTRO_CIUDADANO = "registro_ciudadano", "Registro de cuenta ciudadana"
+        ACCESO_CIUDADANO = "acceso_ciudadano", "Inicio de sesión ciudadano"
+        CONSULTA_RENAPO = "consulta_renapo", "Consulta a RENAPO"
+        CONSULTA_DATOS = "consulta_datos", "Consulta de datos de una persona"
+        VERIFICACION_PRESENCIAL = "verificacion", "Verificación de identidad en ventanilla"
+        VINCULACION = "vinculacion", "Vinculación de identidad"
+        CONTACTO = "contacto", "Confirmación de medio de contacto"
 
     fecha = models.DateTimeField(auto_now_add=True, db_index=True)
     municipio = models.ForeignKey(Municipio, null=True, blank=True, on_delete=models.PROTECT)
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.PROTECT)
-    accion = models.CharField("acción", max_length=20, choices=Accion.choices)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.PROTECT,
+                                help_text="Servidor público que realizó la acción")
+    persona = models.ForeignKey("ciudadania.Persona", null=True, blank=True, on_delete=models.PROTECT,
+                                related_name="eventos", help_text="Persona a la que se refiere el evento")
+    accion = models.CharField("acción", max_length=24, choices=Accion.choices)
     modelo = models.CharField(max_length=80, blank=True)
     objeto_id = models.CharField(max_length=40, blank=True)
     descripcion = models.CharField("descripción", max_length=300)

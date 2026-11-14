@@ -1,0 +1,19 @@
+{% extends "ventanilla/_base.html" %}
+{% block contenido %}
+<div class="estrecho">
+  <h1>Registrar a una persona</h1>
+  <p class="entrada">Esta CURP no tiene cuenta. RENAPO devolvió estos datos:</p>
+  <dl class="datos">
+    <div><dt>CURP</dt><dd>{{ curp }}</dd></div>
+    <div><dt>Nombre</dt><dd>{{ datos.nombres }} {{ datos.primer_apellido }} {{ datos.segundo_apellido }}</dd></div>
+    <div><dt>Fecha de nacimiento</dt><dd>{{ fecha_nacimiento }}</dd></div>
+    {% if datos.simulada %}<div><dt>Fuente</dt><dd><span class="etiqueta etiqueta--aviso">Simulador de RENAPO</span></dd></div>{% endif %}
+  </dl>
+  <h2>Verifica la identidad</h2>
+  {% include "ventanilla/_verificacion.html" %}
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <button class="boton" type="submit">Registrar con nivel 2</button>
+  </form>
+</div>
+{% endblock %}

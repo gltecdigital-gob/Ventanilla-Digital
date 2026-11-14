@@ -16,14 +16,46 @@ Piloto: Zacatlán y Huauchinango, Puebla.
 | Inventario del piloto | 90 trámites de Zacatlán y 112 de Huauchinango, clasificados por ruta de digitalización (A a D). |
 | Simulador de RENAPO | Validación local de formato y dígito verificador de la CURP y respuestas simuladas, para desarrollar la etapa 2 mientras se firma el convenio. |
 
+## Etapa 2: identidad de la ciudadanía
+
+| Parte | Qué hace |
+| --- | --- |
+| Perfil único por CURP | Una persona, un perfil para todos los municipios (art. 59 LNETB). Los datos vienen de RENAPO y no se editan. |
+| Cuenta municipal (`/cuenta/registro/`) | CURP → validación en RENAPO → confirmación del nombre → correo o celular con código → aviso de privacidad. Sin contraseñas: cada acceso pide un código de 6 dígitos. |
+| Llave MX (`/cuenta/llave-mx/`) | Ida y vuelta con estado anti-falsificación. Si la CURP ya tenía cuenta municipal, se vinculan en un solo perfil. |
+| Niveles de confianza | 1 Básico (cuenta municipal), 2 Verificado (Llave MX o verificación en ventanilla), 3 Alto (Llave MX Verificada). La cuenta municipal nunca pasa de nivel 2 en una sesión. `requiere_nivel(n)` protege las vistas de trámites de la etapa 3. |
+| Ventanilla asistida (`/ventanilla/`) | El personal registra o verifica en persona: anota tipo de identificación y solo sus últimos 4 caracteres; confirma el contacto con un código que la persona le dicta. |
+| Protección | Límites de intentos por CURP y por IP, códigos de un solo uso guardados como huella, 5 intentos por código, vigencia de 10 minutos, cambio de sesión al entrar, respuesta neutra al pedir código para no revelar qué CURP tienen cuenta, aviso al titular al registrar, vincular o verificar. |
+| Transparencia para la persona | En «Mi cuenta» ve cada acceso y cada consulta de sus datos por personal municipal. |
+| Simuladores | RENAPO, Llave MX y buzón de correos y mensajes (`/simuladores/buzon/`), solo con `DEBUG` o `PERMITIR_SIMULADORES`. La aplicación no arranca en producción si algún servicio quedó en simulador. |
+
+### Probar la etapa 2 en tu computadora
+
+1. `python manage.py cargar_piloto` (crea también el grupo «Ventanilla»).
+2. Registro: entra a `/cuenta/registro/` con una CURP de formato válido, por ejemplo `PEPJ900101HPLRRN02`.
+   El simulador de RENAPO responde con el nombre **Persona de prueba** y el apellido **Simulada**.
+3. El código llega al buzón de pruebas: `/simuladores/buzon/`.
+4. Ventanilla: crea en el panel un servidor público con rol «Personal de ventanilla», marca «Es staff»,
+   asígnale municipio y agrégalo al grupo «Ventanilla». Después entra a `/ventanilla/`.
+5. Llave MX: `/cuenta/llave-mx/` abre el simulador; marca «Verificada» para probar el nivel 3.
+6. CURP de prueba dada de baja: `BAJA000101HPLXXXA6`.
+
+### Lo que depende de terceros
+
+- **RENAPO real** (`RENAPO_BACKEND=convenio`): requiere el convenio de cada municipio con la Secretaría de
+  Gobernación y la especificación del servicio. Hoy responde «no podemos validar tu CURP» con un mensaje claro.
+- **Llave MX real** (`LLAVE_MX_BACKEND=atdt`): requiere la aprobación y el manual técnico de la ATDT.
+- **Mensajes de texto** (`SMS_BACKEND`): requiere contratar un proveedor.
+- **Correo**: SMTP del municipio con las variables `EMAIL_*`.
+
 ## Qué NO incluye todavía
 
-- Registro e inicio de sesión de la ciudadanía (Llave MX y cuenta municipal): etapa 2.
 - Solicitudes en línea, bandeja de dependencias, firma y código QR: etapa 3.
 - Pagos y consultas internas a predial y agua: etapa 4.
-- Seguridad por fila en PostgreSQL. Hoy la separación entre municipios se aplica en la aplicación
-  y está cubierta por pruebas; el refuerzo en la base de datos se agrega en la etapa 2.
-- Segundo factor para servidores públicos: etapa 2.
+- Seguridad por fila en PostgreSQL y segundo factor para servidores públicos: se separaron de la
+  etapa 2 para revisarlos en su propio pull request; la seguridad por fila necesita un PostgreSQL
+  real para probarse.
+- Personas morales, representación de terceros y personas extranjeras sin CURP: etapa 3.
 - Las fichas cargadas solo tienen clave, nombre, dependencia y ruta. Requisitos, costos y plazos
   los captura cada Enlace; hasta entonces el catálogo las marca como «Ficha en levantamiento».
 
@@ -57,7 +89,8 @@ DEBUG=1 python manage.py test
 ```
 
 Cubren: carga del piloto, separación entre municipios en el panel y en el catálogo,
-alcance del Enlace, bitácora, regla de publicación y validación de CURP.
+alcance del Enlace, bitácora, regla de publicación, validación de CURP, registro y acceso
+de la ciudadanía, Llave MX, niveles de confianza, ventanilla asistida y límites de intentos.
 
 ## Ambiente con PostgreSQL (Docker)
 
@@ -75,7 +108,8 @@ config/        configuración, direcciones y arranque
 nucleo/        municipios, dependencias, bitácora y base del panel
 cuentas/       servidores públicos y roles
 catalogo/      trámites, requisitos, páginas públicas
-simuladores/   validación de CURP y simulador de RENAPO
+ciudadania/    perfil por CURP, cuenta municipal, Llave MX, niveles de confianza y ventanilla asistida
+simuladores/   validación de CURP y simuladores de RENAPO, Llave MX, correo y mensajes
 datos/         inventario del piloto (clave|dependencia|nombre|ruta)
 templates/ static/   plantilla base y hoja de estilos
 ```

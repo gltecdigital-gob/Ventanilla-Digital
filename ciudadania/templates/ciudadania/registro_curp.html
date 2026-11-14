@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Crear cuenta · Trámites digitales{% endblock %}
+{% block contenido %}
+<div class="estrecho">
+  {% include "ciudadania/_pasos.html" %}
+  <h1>Crea tu cuenta municipal</h1>
+  <p class="entrada">Escribe tu CURP. La validamos con el Registro Nacional de Población (RENAPO).</p>
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <button class="boton" type="submit">Continuar</button>
+  </form>
+  <p class="nota">¿Ya tienes cuenta o Llave MX? <a href="{% url 'ciudadania:entrar' %}">Entra aquí</a>.</p>
+</div>
+{% endblock %}

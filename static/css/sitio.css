@@ -113,3 +113,41 @@ main { padding-bottom: 3rem; min-height: 60vh; }
 
 .pie { border-top: 1px solid var(--linea); padding: 1.5rem 0 2.5rem; color: var(--tinta-suave); font-size: 0.9rem; background: #efece4; }
 .pie p { margin: 0 0 0.4rem; }
+
+/* --- Etapa 2: cuentas, formularios y ventanilla --- */
+.cabecera__nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1.25rem; justify-content: flex-end; }
+.cabecera__enlace--texto { text-decoration: none; font-weight: 400; opacity: 0.9; font-size: 0.9rem; }
+.estrecho { max-width: 34rem; }
+.mensajes { list-style: none; padding: 0; margin: 1.25rem 0 0; }
+.mensaje { padding: 0.75rem 1rem; border-radius: var(--radio); background: var(--acento-tenue); border: 1px solid #b9d6cd; margin-bottom: 0.5rem; }
+.mensaje--warning, .mensaje--error { background: var(--aviso-tenue); border-color: #e6cf94; }
+.formulario { display: grid; gap: 1rem; margin: 1.25rem 0; }
+.campo input[type=text], .campo input[type=email], .campo input[type=search] { text-transform: none; }
+.campo--error input, .campo--error select { border-color: #b3261e; }
+.campo fieldset { border: 0; padding: 0; margin: 0; }
+.campo legend { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.4rem; }
+.opcion { display: flex; gap: 0.6rem; align-items: center; padding: 0.55rem 0.75rem; border: 1px solid var(--linea); border-radius: 8px; background: var(--papel); margin-bottom: 0.4rem; font-weight: 400 !important; }
+.campo--casilla { display: grid; grid-template-columns: auto 1fr; gap: 0.6rem; align-items: start; }
+.campo--casilla input { width: 1.3rem; height: 1.3rem; margin-top: 0.15rem; }
+.campo--casilla label { font-weight: 400 !important; font-size: 1rem !important; }
+.campo--casilla .error, .campo--casilla .ayuda { grid-column: 1 / -1; }
+.ayuda { color: var(--tinta-suave); font-size: 0.9rem; margin: 0.3rem 0 0; }
+.error { color: #b3261e; font-size: 0.9rem; margin: 0.3rem 0 0; font-weight: 600; }
+.error-general { background: #fbe9e7; border: 1px solid #f1b7ae; border-left: 5px solid #b3261e; border-radius: var(--radio); padding: 0.75rem 1rem; }
+.error-general p { margin: 0; }
+.pasos { color: var(--tinta-suave); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; margin: 1.5rem 0 -0.5rem; }
+.boton--grande { width: 100%; min-height: 3.3rem; font-size: 1.1rem; margin-top: 0.75rem; }
+.separador { display: flex; align-items: center; gap: 0.75rem; color: var(--tinta-suave); margin: 1.75rem 0 0.5rem; font-size: 0.9rem; }
+.separador::before, .separador::after { content: ""; flex: 1; border-top: 1px solid var(--linea); }
+.caja { background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 0.25rem 1.1rem; }
+.nivel { background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 0.25rem 1.1rem 0.75rem; margin: 1.25rem 0; }
+.nivel h2 { font-size: 1.1rem; }
+.nivel__escala { list-style: none; padding: 0; margin: 0 0 0.75rem; display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); }
+.nivel__escala li { border: 1px solid var(--linea); border-radius: 8px; padding: 0.6rem 0.75rem; color: var(--tinta-suave); }
+.nivel__escala li span { display: block; font-size: 0.85rem; }
+.nivel__escala li.logrado { border-color: var(--acento); background: var(--acento-tenue); color: var(--acento-fuerte); }
+.tabla { width: 100%; border-collapse: collapse; background: var(--papel); border: 1px solid var(--linea); font-size: 0.95rem; }
+.tabla th, .tabla td { text-align: left; padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--linea); vertical-align: top; }
+.tabla th { background: #efece4; font-size: 0.85rem; }
+.instrucciones { background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 0.75rem 1rem 0.75rem 2.2rem; }
+.lista-simple { padding-left: 1.2rem; }

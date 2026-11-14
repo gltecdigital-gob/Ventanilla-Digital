@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block titulo %}Simulador de Llave MX{% endblock %}
+{% block contenido %}
+<div class="estrecho">
+  <div class="aviso"><strong>Simulador para desarrollo.</strong> Esta página imita a Llave MX. En producción, la persona se identifica en el sitio oficial de la ATDT y esta página no existe.</div>
+  <h1>Llave MX (simulada)</h1>
+  <form method="post" class="formulario" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <button class="boton" type="submit">Autorizar y regresar</button>
+  </form>
+</div>
+{% endblock %}

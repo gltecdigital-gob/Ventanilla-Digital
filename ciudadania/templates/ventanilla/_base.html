@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block titulo %}Ventanilla asistida · {{ request.user.municipio }}{% endblock %}
+{% block nav %}
+<span class="cabecera__enlace cabecera__enlace--texto">Ventanilla · {{ request.user.get_full_name|default:request.user.username }} · {{ request.user.municipio }}</span>
+<a class="cabecera__enlace" href="{% url 'ventanilla:inicio' %}">Nueva búsqueda</a>
+{% endblock %}

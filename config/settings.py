@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "nucleo",
     "cuentas",
     "catalogo",
+    "ciudadania",
     "simuladores",
 ]
 
@@ -63,6 +64,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "ciudadania.contexto.ciudadano",
             ],
         },
     },
@@ -116,3 +118,27 @@ if not DEBUG:
     SECURE_CONTENT_TYPE_NOSNIFF = True
 SESSION_COOKIE_AGE = 60 * 60 * 8  # una jornada de trabajo
 X_FRAME_OPTIONS = "DENY"
+
+# Detrás de un proxy inverso de confianza (Nginx, balanceador) que agrega X-Forwarded-For.
+CONFIAR_PROXY = _bool("CONFIAR_PROXY")
+
+# --- Servicios externos -----------------------------------------------------
+# Cada uno tiene un simulador para desarrollo. En producción se usa el real.
+PERMITIR_SIMULADORES = _bool("PERMITIR_SIMULADORES")
+RENAPO_BACKEND = os.environ.get("RENAPO_BACKEND", "simulador" if DEBUG else "convenio")
+LLAVE_MX_BACKEND = os.environ.get("LLAVE_MX_BACKEND", "simulador" if DEBUG else "atdt")
+SMS_BACKEND = os.environ.get("SMS_BACKEND", "simulador" if DEBUG else "pendiente")
+
+if DEBUG or PERMITIR_SIMULADORES:
+    EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "simuladores.correo.BuzonBackend")
+else:
+    EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend")
+    EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
+    EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+    EMAIL_USE_TLS = _bool("EMAIL_USE_TLS", "1")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-responder@localhost")
+
+if not DEBUG and not PERMITIR_SIMULADORES and "simulador" in (RENAPO_BACKEND, LLAVE_MX_BACKEND, SMS_BACKEND):
+    raise RuntimeError("Hay un servicio configurado con su simulador en producción. Revisa *_BACKEND.")

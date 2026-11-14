@@ -18,10 +18,20 @@
           <span class="marca__lugar">{% if municipio %}{{ municipio.nombre }}, {{ municipio.estado }}{% else %}Plataforma municipal{% endif %}</span>
         </span>
       </a>
-      {% if municipio %}<a class="cabecera__enlace" href="{% url 'catalogo:catalogo' municipio.slug %}">Catálogo</a>{% endif %}
+      <nav class="cabecera__nav" aria-label="Principal">
+        {% block nav %}
+        {% if municipio %}<a class="cabecera__enlace" href="{% url 'catalogo:catalogo' municipio.slug %}">Catálogo</a>{% endif %}
+        {% if ciudadano %}<a class="cabecera__enlace" href="{% url 'ciudadania:perfil' %}">Mi cuenta</a>{% else %}<a class="cabecera__enlace" href="{% url 'ciudadania:entrar' %}">Entrar</a>{% endif %}
+        {% endblock %}
+      </nav>
     </div>
   </header>
   <main id="contenido" class="ancho">
+    {% if messages %}
+    <ul class="mensajes" role="status">
+      {% for m in messages %}<li class="mensaje mensaje--{{ m.tags }}">{{ m }}</li>{% endfor %}
+    </ul>
+    {% endif %}
     {% block contenido %}{% endblock %}
   </main>
   <footer class="pie">

@@ -14,6 +14,7 @@ class Usuario(AbstractUser):
     class Rol(models.TextChoices):
         AUTORIDAD = "autoridad", "Autoridad Municipal de Simplificación y Digitalización"
         ENLACE = "enlace", "Enlace de dependencia"
+        VENTANILLA = "ventanilla", "Personal de ventanilla"
         CONSULTA = "consulta", "Solo consulta"
 
     municipio = models.ForeignKey(Municipio, null=True, blank=True, on_delete=models.PROTECT)

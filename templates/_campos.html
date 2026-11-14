@@ -1,0 +1,15 @@
+{% if form.non_field_errors %}<div class="error-general" role="alert">{% for e in form.non_field_errors %}<p>{{ e }}</p>{% endfor %}</div>{% endif %}
+{% for campo in form %}
+<div class="campo{% if campo.errors %} campo--error{% endif %}{% if campo.field.widget.input_type == 'checkbox' %} campo--casilla{% endif %}">
+  {% if campo.field.widget.input_type == 'checkbox' %}
+    {{ campo }} <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+  {% elif campo.field.widget.input_type == 'radio' %}
+    <fieldset><legend>{{ campo.label }}</legend>{% for opcion in campo %}<label class="opcion">{{ opcion.tag }} {{ opcion.choice_label }}</label>{% endfor %}</fieldset>
+  {% else %}
+    <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+    {{ campo }}
+  {% endif %}
+  {% if campo.help_text %}<p class="ayuda">{{ campo.help_text|safe }}</p>{% endif %}
+  {% for e in campo.errors %}<p class="error" role="alert">{{ e }}</p>{% endfor %}
+</div>
+{% endfor %}

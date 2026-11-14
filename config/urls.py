@@ -8,6 +8,7 @@ admin.site.index_title = "Panel de la Autoridad Municipal de Simplificación y D
 from ciudadania import views as ciudadania_views
 
 urlpatterns = [
+    path("panel/segundo-factor/", include("cuentas.urls_segundo_factor")),
     path("panel/", admin.site.urls),
     path("cuenta/", include("ciudadania.urls")),
     path("ventanilla/", include("ciudadania.urls_ventanilla")),

@@ -73,6 +73,8 @@ class EventoBitacora(models.Model):
         VERIFICACION_PRESENCIAL = "verificacion", "Verificación de identidad en ventanilla"
         VINCULACION = "vinculacion", "Vinculación de identidad"
         CONTACTO = "contacto", "Confirmación de medio de contacto"
+        SEGUNDO_FACTOR = "segundo_factor", "Segundo factor"
+        SEGUNDO_FACTOR_FALLIDO = "segundo_factor_fallido", "Segundo factor incorrecto"
 
     fecha = models.DateTimeField(auto_now_add=True, db_index=True)
     municipio = models.ForeignKey(Municipio, null=True, blank=True, on_delete=models.PROTECT)

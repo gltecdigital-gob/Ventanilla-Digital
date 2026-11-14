@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from cuentas.models import Usuario
+from cuentas.pruebas import entrar_con_segundo_factor
 from nucleo.models import EventoBitacora, Municipio
 from simuladores.models import MensajeSimulado
 from simuladores.renapo import CURP_DADA_DE_BAJA
@@ -292,13 +293,13 @@ class VentanillaTests(RegistroMixin, TestCase):
 
     def test_requiere_permiso(self):
         sin_permiso = Usuario.objects.create_user("consulta", password="Clave-larga-de-prueba-1", is_staff=True, municipio=self.zacatlan)
-        self.client.force_login(sin_permiso)
+        entrar_con_segundo_factor(self.client, sin_permiso)
         self.assertEqual(self.client.get(reverse("ventanilla:inicio")).status_code, 403)
         self.client.logout()
         self.assertEqual(self.client.get(reverse("ventanilla:inicio")).status_code, 302)
 
     def test_alta_en_ventanilla_con_nivel_2_y_sin_contacto(self):
-        self.client.force_login(self.servidor)
+        entrar_con_segundo_factor(self.client, self.servidor)
         respuesta = self.client.post(reverse("ventanilla:inicio"), {"curp": OTRA_CURP})
         self.assertRedirects(respuesta, reverse("ventanilla:alta"))
         self.assertContains(self.client.get(reverse("ventanilla:alta")), "PERSONA DE PRUEBA")
@@ -316,7 +317,7 @@ class VentanillaTests(RegistroMixin, TestCase):
         self.assertEqual(evento.municipio, self.zacatlan)
 
     def test_sin_cotejo_no_se_verifica(self):
-        self.client.force_login(self.servidor)
+        entrar_con_segundo_factor(self.client, self.servidor)
         self.client.post(reverse("ventanilla:inicio"), {"curp": OTRA_CURP})
         datos = self.verificacion(alta=True)
         del datos["cotejo"]
@@ -324,7 +325,7 @@ class VentanillaTests(RegistroMixin, TestCase):
         self.assertFalse(Persona.objects.exists())
 
     def test_confirmar_contacto_en_ventanilla_permite_entrar_en_linea(self):
-        self.client.force_login(self.servidor)
+        entrar_con_segundo_factor(self.client, self.servidor)
         self.client.post(reverse("ventanilla:inicio"), {"curp": OTRA_CURP})
         self.client.post(reverse("ventanilla:alta"), self.verificacion(alta=True))
         url = reverse("ventanilla:contacto", args=[OTRA_CURP])
@@ -344,7 +345,7 @@ class VentanillaTests(RegistroMixin, TestCase):
     def test_verificar_a_persona_registrada_en_linea_sube_su_nivel(self):
         self.registrar()
         self.client.post(reverse("ciudadania:salir"))
-        self.client.force_login(self.servidor)
+        entrar_con_segundo_factor(self.client, self.servidor)
         respuesta = self.client.post(reverse("ventanilla:inicio"), {"curp": CURP})
         self.assertRedirects(respuesta, reverse("ventanilla:persona", args=[CURP]))
         self.client.get(respuesta["Location"])

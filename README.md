@@ -48,13 +48,61 @@ Piloto: Zacatlán y Huauchinango, Puebla.
 - **Mensajes de texto** (`SMS_BACKEND`): requiere contratar un proveedor.
 - **Correo**: SMTP del municipio con las variables `EMAIL_*`.
 
+## Seguridad por fila y segundo factor
+
+### Seguridad por fila (PostgreSQL)
+
+La base de datos misma separa los municipios. Aunque una vista del panel olvide filtrar,
+PostgreSQL no entrega ni deja escribir filas de otro municipio.
+
+| Quién | Dónde | Qué ve la base |
+| --- | --- | --- |
+| Personal municipal | `/panel/` y `/ventanilla/` | Solo las filas de su municipio |
+| Administrador de la plataforma | En todo el sitio | Todo |
+| Ciudadanía y visitantes | Catálogo y «Mi cuenta» | Todo; cada vista filtra por municipio o por persona |
+| Comandos (`cargar_piloto`, `shell`) | Fuera de peticiones | Todo |
+
+Tablas protegidas: municipios, dependencias, trámites, requisitos, bitácora y verificaciones presenciales.
+Las personas (perfil por CURP) son comunes a todos los municipios y no se separan.
+
+Condiciones para que funcione:
+
+- **El rol con que se conecta la aplicación no puede ser superusuario ni tener `BYPASSRLS`**: esos roles se
+  saltan la seguridad por fila. `python manage.py check --deploy` falla (`nucleo.E003`) si es así.
+  `docker-compose.yml` ya crea un rol `plataforma_app` sin privilegios.
+- **No usar un agrupador de conexiones en modo transacción** (por ejemplo PgBouncer `pool_mode=transaction`):
+  el alcance se guarda en la sesión de la conexión.
+- En SQLite (desarrollo) no hay seguridad por fila; la separación queda solo en la aplicación.
+
+### Segundo factor para el personal
+
+Todo servidor público necesita, además de su contraseña, un código de una aplicación de autenticación
+(Google Authenticator, Microsoft Authenticator, FreeOTP) para entrar al panel o a la ventanilla.
+
+- La primera vez, la plataforma muestra un código QR y entrega 10 códigos de respaldo que se ven una sola vez.
+- Cada inicio de sesión pide el código. Un código no se acepta dos veces.
+- Cinco intentos fallidos bloquean 15 minutos; cada intento fallido queda en la bitácora.
+- Si alguien pierde su teléfono, la Autoridad Municipal (o el administrador) usa la acción
+  «Reiniciar segundo factor» en «Servidores públicos»; la sesión abierta de esa persona deja de valer.
+- La semilla de cada teléfono se guarda cifrada con `CLAVE_CIFRADO`, distinta de `SECRET_KEY`. Respáldala:
+  si se pierde, todo el personal tendrá que configurar su segundo factor de nuevo.
+- `SEGUNDO_FACTOR_OBLIGATORIO=0` lo desactiva (solo para desarrollo).
+
+### Pruebas con PostgreSQL
+
+Las pruebas de seguridad por fila solo corren con PostgreSQL y un rol sin privilegios:
+
+```bash
+createuser --createdb --no-superuser plataforma   # o con psql: CREATE ROLE ... NOSUPERUSER NOBYPASSRLS CREATEDB
+DEBUG=1 DATABASE_URL=postgres://plataforma:clave@localhost:5432/plataforma python manage.py test
+```
+
 ## Qué NO incluye todavía
 
 - Solicitudes en línea, bandeja de dependencias, firma y código QR: etapa 3.
 - Pagos y consultas internas a predial y agua: etapa 4.
-- Seguridad por fila en PostgreSQL y segundo factor para servidores públicos: se separaron de la
-  etapa 2 para revisarlos en su propio pull request; la seguridad por fila necesita un PostgreSQL
-  real para probarse.
+- Seguridad por fila en la tabla de servidores públicos: la separación de usuarios entre municipios
+  sigue solo en la aplicación (la tabla se usa para identificar al usuario antes de fijar el alcance).
 - Personas morales, representación de terceros y personas extranjeras sin CURP: etapa 3.
 - Las fichas cargadas solo tienen clave, nombre, dependencia y ruta. Requisitos, costos y plazos
   los captura cada Enlace; hasta entonces el catálogo las marca como «Ficha en levantamiento».
@@ -71,6 +119,11 @@ python manage.py migrate
 python manage.py cargar_piloto      # municipios, dependencias, trámites y grupos de permisos
 python manage.py createsuperuser    # administrador de la plataforma
 python manage.py runserver
+```
+
+Al entrar al panel te pedirá configurar tu segundo factor con una aplicación de autenticación.
+
+```bash
 ```
 
 - Catálogo: http://127.0.0.1:8000/
@@ -95,7 +148,7 @@ de la ciudadanía, Llave MX, niveles de confianza, ventanilla asistida y límite
 ## Ambiente con PostgreSQL (Docker)
 
 ```bash
-cp .env.example .env    # y cambia las claves
+cp .env.example .env    # y cambia las claves, incluida CLAVE_CIFRADO
 docker compose up --build
 docker compose exec web python manage.py cargar_piloto
 docker compose exec web python manage.py createsuperuser

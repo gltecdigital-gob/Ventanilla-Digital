@@ -1,0 +1,17 @@
+{% extends "admin/base_site.html" %}
+{% block extrastyle %}{{ block.super }}{% include "segundo_factor/_estilos.html" %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block content %}
+<div class="sf">
+  <p>Escribe el código de 6 dígitos de tu aplicación de autenticación.</p>
+  <form method="post">{% csrf_token %}
+    <input type="hidden" name="next" value="{{ siguiente }}">
+    {% for e in form.non_field_errors %}<p class="sf__error">{{ e }}</p>{% endfor %}
+    <p><label for="id_codigo">Código</label><br>{{ form.codigo }}</p>
+    {% for e in form.codigo.errors %}<p class="sf__error">{{ e }}</p>{% endfor %}
+    <input type="submit" value="Verificar">
+  </form>
+  <p>¿Perdiste tu teléfono? Escribe uno de tus códigos de respaldo (te quedan {{ restantes }}). Si no los tienes, pide a la Autoridad Municipal que reinicie tu segundo factor.</p>
+  <form method="post" action="{% url 'segundo_factor:salir' %}">{% csrf_token %}<button type="submit" class="button">Salir</button></form>
+</div>
+{% endblock %}

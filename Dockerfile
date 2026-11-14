@@ -4,7 +4,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-RUN SECRET_KEY=solo-para-construir python manage.py collectstatic --noinput
+RUN SECRET_KEY=solo-para-construir CLAVE_CIFRADO=c29sby1wYXJhLWNvbnN0cnVpci1sYS1pbWFnZW4xMjM= python manage.py collectstatic --noinput
 RUN useradd --system plataforma && chown -R plataforma /app
 USER plataforma
 EXPOSE 8000

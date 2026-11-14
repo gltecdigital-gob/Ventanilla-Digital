@@ -19,6 +19,7 @@ LIMITES = {
     "codigo_curp": (5, timedelta(hours=1)),
     "codigo_ip": (20, timedelta(hours=1)),
     "identidad_curp": (5, timedelta(hours=1)),
+    "segundo_factor_usuario": (5, timedelta(minutes=15)),
 }
 
 

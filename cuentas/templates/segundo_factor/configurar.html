@@ -1,0 +1,23 @@
+{% extends "admin/base_site.html" %}
+{% block extrastyle %}{{ block.super }}{% include "segundo_factor/_estilos.html" %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block content %}
+<div class="sf">
+  <p>Para entrar al panel y a la ventanilla necesitas, además de tu contraseña, un código que cambia cada 30 segundos en tu teléfono. Así nadie puede entrar con tu contraseña aunque la conozca.</p>
+  <ol>
+    <li>Instala en tu teléfono una aplicación de autenticación: Google Authenticator, Microsoft Authenticator o FreeOTP.</li>
+    <li>En la aplicación, elige «agregar cuenta» y escanea este código:
+      <div class="sf__qr">{{ qr }}</div>
+      ¿No puedes escanear? Escribe esta clave: <span class="sf__secreto">{{ secreto_agrupado }}</span>
+    </li>
+    <li>Escribe el código de 6 dígitos que muestra la aplicación.</li>
+  </ol>
+  <form method="post">{% csrf_token %}
+    <input type="hidden" name="next" value="{{ siguiente }}">
+    {% for e in form.non_field_errors %}<p class="sf__error">{{ e }}</p>{% endfor %}
+    <p><label for="id_codigo">Código de 6 dígitos</label><br>{{ form.codigo }}</p>
+    {% for e in form.codigo.errors %}<p class="sf__error">{{ e }}</p>{% endfor %}
+    <input type="submit" value="Activar">
+  </form>
+</div>
+{% endblock %}

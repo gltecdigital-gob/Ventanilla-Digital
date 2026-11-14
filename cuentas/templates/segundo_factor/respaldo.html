@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html" %}
+{% block extrastyle %}{{ block.super }}{% include "segundo_factor/_estilos.html" %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block content %}
+<div class="sf">
+  <p class="sf__aviso"><strong>Solo se muestran esta vez.</strong> Imprímelos o anótalos y guárdalos en un lugar seguro, lejos de tu teléfono. Cada uno sirve una sola vez si pierdes el teléfono.</p>
+  <ul class="sf__codigos">{% for c in codigos %}<li>{{ c }}</li>{% endfor %}</ul>
+  <p><a class="button" href="{{ siguiente }}">Ya los guardé, continuar</a></p>
+</div>
+{% endblock %}

@@ -1,16 +1,31 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin
 
 from nucleo.admin_base import municipio_de
 from nucleo.bitacora import registrar
 from nucleo.models import Dependencia, EventoBitacora, Municipio
 
-from .models import Usuario
+from . import segundo_factor
+from .models import SegundoFactor, Usuario
 
 
 @admin.register(Usuario)
 class UsuarioAdmin(UserAdmin):
-    list_display = ("username", "first_name", "last_name", "municipio", "dependencia", "rol", "is_active")
+    list_display = ("username", "first_name", "last_name", "municipio", "dependencia", "rol", "is_active", "tiene_segundo_factor")
+    actions = ["reiniciar_segundo_factor"]
+
+    @admin.display(boolean=True, description="Segundo factor")
+    def tiene_segundo_factor(self, obj):
+        return SegundoFactor.objects.filter(usuario=obj, confirmado__isnull=False).exists()
+
+    @admin.action(description="Reiniciar segundo factor (si perdió el teléfono)", permissions=["change"])
+    def reiniciar_segundo_factor(self, request, queryset):
+        for usuario in queryset:
+            segundo_factor.reiniciar(usuario)
+            registrar(EventoBitacora.Accion.SEGUNDO_FACTOR, f"Segundo factor reiniciado para {usuario.get_username()}",
+                      request=request, objeto=usuario, municipio=usuario.municipio)
+        self.message_user(request, f"Se reinició el segundo factor de {queryset.count()} cuenta(s). "
+                                   "Deberán configurarlo de nuevo al entrar.", messages.SUCCESS)
     list_filter = ("municipio", "rol", "is_active")
 
     def get_list_filter(self, request):

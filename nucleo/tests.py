@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from catalogo.models import Tramite
 from cuentas.models import Usuario
+from cuentas.pruebas import entrar_con_segundo_factor
 from nucleo.models import Dependencia, EventoBitacora, Municipio
 
 
@@ -42,7 +43,7 @@ class CargaPilotoTests(BasePiloto):
 class SeparacionPorMunicipioTests(BasePiloto):
     def setUp(self):
         self.autoridad = self.crear_usuario("autoridad.zac", self.zacatlan, "Autoridad Municipal", Usuario.Rol.AUTORIDAD)
-        self.client.force_login(self.autoridad)
+        entrar_con_segundo_factor(self.client, self.autoridad)
 
     def test_lista_solo_muestra_su_municipio(self):
         respuesta = self.client.get(reverse("admin:catalogo_tramite_changelist"))
@@ -102,7 +103,7 @@ class EnlaceTests(BasePiloto):
     def test_enlace_solo_ve_los_tramites_de_su_dependencia(self):
         secretaria = Dependencia.objects.get(municipio=self.zacatlan, nombre="Secretaría")
         enlace = self.crear_usuario("enlace.sec", self.zacatlan, "Enlace de dependencia", Usuario.Rol.ENLACE, secretaria)
-        self.client.force_login(enlace)
+        entrar_con_segundo_factor(self.client, enlace)
         respuesta = self.client.get(reverse("admin:catalogo_tramite_changelist"))
         esperado = Tramite.objects.filter(dependencia=secretaria).count()
         self.assertEqual(respuesta.context["cl"].result_count, esperado)
@@ -120,7 +121,7 @@ class BitacoraTests(BasePiloto):
 
     def test_editar_un_tramite_deja_rastro(self):
         autoridad = self.crear_usuario("autoridad.zac", self.zacatlan, "Autoridad Municipal", Usuario.Rol.AUTORIDAD)
-        self.client.force_login(autoridad)
+        entrar_con_segundo_factor(self.client, autoridad)
         tramite = Tramite.objects.filter(municipio=self.zacatlan).first()
         datos = {
             "clave": tramite.clave, "nombre": tramite.nombre + " (editado)", "tipo": tramite.tipo,
@@ -142,3 +143,10 @@ class BitacoraTests(BasePiloto):
         self.client.login(username="autoridad.zac", password="Clave-larga-de-prueba-1")
         self.assertTrue(EventoBitacora.objects.filter(accion="acceso_fallido").exists())
         self.assertTrue(EventoBitacora.objects.filter(accion="acceso").exists())
+
+
+class VerificacionesDelSistemaTests(TestCase):
+    def test_el_middleware_de_alcance_esta_activo(self):
+        from .checks import middleware_de_alcance
+
+        self.assertEqual(middleware_de_alcance(None), [])

@@ -48,6 +48,8 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "nucleo.middleware.AlcanceMunicipalMiddleware",
+    "cuentas.middleware.SegundoFactorMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -142,3 +144,9 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-responder@localhos
 
 if not DEBUG and not PERMITIR_SIMULADORES and "simulador" in (RENAPO_BACKEND, LLAVE_MX_BACKEND, SMS_BACKEND):
     raise RuntimeError("Hay un servicio configurado con su simulador en producción. Revisa *_BACKEND.")
+
+# --- Segundo factor del personal y cifrado de secretos ------------------------
+SEGUNDO_FACTOR_OBLIGATORIO = _bool("SEGUNDO_FACTOR_OBLIGATORIO", "1")
+CLAVE_CIFRADO = os.environ.get("CLAVE_CIFRADO", "")
+if not DEBUG and not CLAVE_CIFRADO:
+    raise RuntimeError("Falta CLAVE_CIFRADO (genera una con: python -c \"from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())\").")

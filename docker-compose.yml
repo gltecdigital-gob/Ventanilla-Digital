@@ -4,17 +4,22 @@ services:
     image: postgres:16
     environment:
       POSTGRES_DB: plataforma
-      POSTGRES_USER: plataforma
+      POSTGRES_USER: administrador_db          # superusuario, solo para administrar la base
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Define POSTGRES_PASSWORD en .env}
+      APP_DB_PASSWORD: ${APP_DB_PASSWORD:?Define APP_DB_PASSWORD en .env}
     volumes:
       - datos_db:/var/lib/postgresql/data
+      - ./docker/initdb:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U plataforma"]
+      test: ["CMD-SHELL", "pg_isready -U administrador_db -d plataforma"]
       interval: 5s
       retries: 10
   web:
     build: .
     env_file: .env
+    environment:
+      # La aplicación entra con un rol sin privilegios para que la seguridad por fila aplique.
+      DATABASE_URL: postgres://plataforma_app:${APP_DB_PASSWORD}@db:5432/plataforma
     depends_on:
       db:
         condition: service_healthy

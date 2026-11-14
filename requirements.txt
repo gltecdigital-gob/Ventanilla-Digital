@@ -3,3 +3,5 @@ dj-database-url>=2.2
 whitenoise>=6.7
 psycopg[binary]>=3.2
 gunicorn>=23.0
+cryptography>=43
+segno>=1.6
